@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
+import { AddNewPage } from '../addnew/addnew';
+import { StatsPage } from '../stats/stats';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  homeRoot = HomePage;
+  addNewRoot = AddNewPage;
+  statsRoot = StatsPage;
+
+  statsParams = {
+    user1: 'admin',
+    user2: 'ionic'
+  };
 
   constructor() {
 
