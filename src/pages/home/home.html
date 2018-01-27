@@ -8,10 +8,10 @@
 <ion-content>
   <blockquote margin-bottom>"The best preparation for tomorrow is doing your best today."</blockquote>
   <canvas #lineCanvas></canvas>
-  <ion-card *ngFor="let moodKey of moodsKeys">
+  <ion-card *ngFor="let mood of moodsList">
     <ion-card-content>
-      feeling {{ moods[moodKey].feeling }}<br>
-      anxiety {{ moods[moodKey].anxiety }}
+      mood {{ mood.mood }}<br>
+      anxiety {{ mood.anxiety }}
     </ion-card-content>
   </ion-card>
 </ion-content>

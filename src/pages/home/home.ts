@@ -12,62 +12,57 @@ export class HomePage {
 
   @ViewChild('lineCanvas') lineCanvas;
 
-  lineChart: any;
-  moods: any;
-  moodsKeys: any;
+  public lineChart: any;
+  public moodsChart: any;
+  public moodsList: Array<any>;
 
   constructor(public navCtrl: NavController, private database: DatabaseProvider) {
   }
 
   ionViewWillEnter() {
     this.database.getMood().then((data) => {
-      this.moods = data;
-      this.moodsKeys = Object.keys(data);
+      this.moodsChart = data['moods'];
+      this.moodsList = data['moods_reverse'];
       this.makeChart();
     }, (error) => {
       console.log(error);
     });
-
   }
 
   public makeChart() {
-    let moodData = [];
+    let current_date = '';
+    let chartDates = [];
+    let chartMood = [];
+    let chartAnxiety = [];
 
-    if(this.moodsKeys.length > 0) {
-      for(var i = 0; i < this.moodsKeys.length; i++) {
-        moodData.push(this.moods[this.moodsKeys[i]]['feeling']);
+    if(this.moodsChart.length > 0) {
+      for(var i = 0; i < this.moodsChart.length; i++) {
+        current_date = this.moodsChart[i]['date'];
+        chartDates.push(current_date);
+        chartMood.push(this.moodsChart[i]['mood']);
+        chartAnxiety.push(this.moodsChart[i]['anxiety']);
       }
     }
 
-    console.log(this.moodsKeys);
-
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
-      type: 'line',
+      type: 'bar',
       data: {
-        labels: this.moodsKeys,
+        labels: chartDates, // dates
         datasets: [
           {
-            label: "Počutje",
-            fill: false,
+            label: "Mood",
             lineTension: 0.3,
             backgroundColor: "rgba(75,192,192,0.4)",
             borderColor: "rgba(75,192,192,1)",
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: moodData,
-            spanGaps: false,
-          }
+            data: chartMood, // data
+          },
+          {
+            label: "Anxiety",
+            lineTension: 0.3,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            data: chartAnxiety, // data
+          },
         ]
       },
       options: {

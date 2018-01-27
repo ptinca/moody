@@ -8,9 +8,18 @@
 
 <ion-content padding>
   <h2 text-center></h2>
+  <ion-col (click)="datePicker.open()" width-100 text-center>
+    <div>
+      {{ display_date }}
+    </div>
+    <ion-item no-lines hidden="true">
+      <ion-datetime #datePicker (ionChange)="selectedDate($event)" pickerFormat="YYYY-MM-DDTHH:mm" [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+  </ion-col>
+
   <ion-item no-padding no-lines>
-    <ion-label>How are you feeling today?</ion-label>
-    <ion-range min="0" max="10" step="1" snaps="true" pin="true" color="secondary" [(ngModel)]="feeling">
+    <ion-label>How is your mood today?</ion-label>
+    <ion-range min="0" max="10" step="1" snaps="true" pin="true" color="secondary" [(ngModel)]="mood">
       <ion-icon range-left  color="danger" name="md-sad"></ion-icon>
       <ion-icon range-right color="secondary" name="md-happy"></ion-icon>
     </ion-range>
